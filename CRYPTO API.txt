@@ -1,0 +1,6 @@
+For Price By id => https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd
+
+For Searching => https://api.coingecko.com/api/v3/search?query=ether
+
+To get information about any specific Coin => https://api.coingecko.com/api/v3/coins/bitcoin
+

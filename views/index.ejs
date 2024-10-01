@@ -1,0 +1,157 @@
+<%- include("./partials/header.ejs") %>
+<div class="page-1">
+    <div class="title">
+        Unlock the Future of Finance
+    </div>
+    <div class="body">
+        Discover real-time cryptocurrency prices and in-depth market insights all in one place. Stay informed and
+        make smart investment decisions with our comprehensive data and analysis.
+    </div>
+    <div class="see">
+        <button>Watch Now</button>
+    </div>
+
+    <img class="bitfly fly" style="height: 35%; border-radius: 50%;" src="/bitcoin.png">
+    <img class="ethfly fly" style="height: 35%; " src="/Ethernium.png">
+</div>
+
+<div id="main">
+    <div id="top">
+        <div id="top-h">
+            CRYPTONITE
+        </div>
+    </div>
+    <div id="center">
+        <div class="content">
+            <div class="heading">
+                About Us
+            </div>
+            <div class="data-img">
+                <div class="img">
+                    <img src="/graph.jpg" style="width: 60%;">
+                </div>
+                <div class="data">
+                    At Cryptonite📈, we simplify cryptocurrency for everyone. 
+                    We offer real-time price updates, market insights, and 
+                    easy-to-understand data to help you make informed decisions. 
+                    Whether you're a new trader or a seasoned investor, our platform is 
+                    designed to keep you ahead in the fast-paced world of digital 
+                    currencies. Join us on the journey to navigate and explore the future 
+                    of finance with confidence.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom">
+        <div id="bottom-h">
+            CRYPTONITE
+        </div>
+    </div>
+</div>
+
+
+<div class="topcoin">
+    <div id="currency">
+        <form class="form" action="/cchange" method="POST">
+                <select class="selector" name="type">
+                  <option value="usd"  data-display="Select">USD</option>
+                  <option value="inr">INR</option>
+                  <option value="eur">EUR</option>
+                  <option value="gbp">GBP</option>
+                  <option value="jpy">JPY</option>
+                </select>
+                <button class="btn" type="submit">Go</button>
+        </form>
+    </div>
+    <div id="database">
+        <div class="row uprow">
+            <div class="rd bigbold">Sr.No</div>
+            <div class="rd bigbold">Coin</div>
+            <div class="rd bigbold">Price</div>
+            <div class="rd bigbold">24h</div>
+            <div class="rd bigbold">24h Volume</div>
+            <div class="rd bigbold">Market Cap</div>
+        </div>
+        <% if(locals){ %>
+        <% for(var i = 0; i<50; i++){ %>
+        <div class="row">
+            <div class="rd">
+                <%= i + 1 %>.
+            </div>
+            <div class="rd coinie">
+                <img src="<%= coin[i].image %>">
+                <h3> 
+                    <a href="/info/<%= coin[i].id %>" method ="POST"><%= coin[i].name %></a>
+                </h3>
+            </div>
+            <div class="rd">
+                <%= symbolie %>
+                <%= coin[i].current_price %>
+            </div>
+            <div class="rd">
+                <% if ((coin[i].price_change_24h) > 0) { %>
+                    <div class="green">
+                        <%= symbolie %>
+                        <%= coin[i].high_24h %>
+                    </div>
+                <% } else if ((coin[i].price_change_24h) < 0) { %>
+                    <div class="red">
+                        <%= symbolie %>
+                        <%= coin[i].high_24h %>
+                    </div>
+                <% } else { %> 
+                    <div class="grey">
+                        <%= symbolie %>
+                        <%= coin[i].high_24h %>
+                    </div>
+                <% } %>
+            </div>                        
+            <div class="rd"><%= coin[i].total_volume %></div>
+            <div class="rd">
+                <div class="rd">
+                    <% if ((coin[i].market_cap_change_24h) > 0) { %>
+                        <div class="green">
+                            <%= symbolie %>
+                            <%= coin[i].market_cap %>
+                        </div>
+                    <% } else if ((coin[i].market_cap_change_24h) < 0) { %>
+                        <div class="red">
+                            <%= symbolie %>
+                            <%= coin[i].market_cap %>
+                        </div>
+                    <% } else { %> 
+                        <div class="grey">
+                            <%= symbolie %>
+                            <%= coin[i].market_cap %>
+                        </div>
+                    <% } %>
+                </div>  
+            </div>
+        </div>
+        <% } %>
+        <% } %>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/js/gsap.js"></script>
+<script>
+
+    // Socket Code 
+
+    const ws = new WebSocket('ws://localhost:3000');
+
+    ws.onopen = () => {
+        console.log("Connected to WebSocket server");
+    };
+
+    ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+    };
+
+    ws.onclose = () => {
+        console.log("Disconnected from WebSocket server");
+    };
+
+</script>
